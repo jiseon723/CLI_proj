@@ -18,22 +18,23 @@ public class App {
         while (true) {
             System.out.print("명령 ) ");
             String command = Container.getSc().nextLine().trim();
+            Recuest recuest = new Recuest(command);
 
-            if (command.equals("종료")) {
+            if (recuest.getActionCode().equals("종료")) {
                 systemController.exit();
                 break;
 
-            } else if (command.equals("등록")) {
+            } else if (recuest.getActionCode().equals("등록")) {
                 articleController.write();
 
-            } else if (command.equals("목록")) {
+            } else if (recuest.getActionCode().equals("목록")) {
                 articleController.list();
 
-            } else if (command.startsWith("삭제")){
-                articleController.delete(command);
+            } else if (recuest.getActionCode().startsWith("삭제")){
+                articleController.delete(recuest);
 
-            } else if (command.startsWith("수정")) {
-                articleController.change(command);
+            } else if (recuest.getActionCode().startsWith("수정")) {
+                articleController.change(recuest);
 
             }
 

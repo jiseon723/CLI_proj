@@ -1,12 +1,17 @@
 package com.ll.article;
 
 import com.ll.Container;
+import com.ll.Recuest;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleController {
-    List<Article> articleList = new ArrayList<>();
-    int lastId = 1;
+    ArticleService articleService;
+
+    ArticleController () {
+        articleService = new ArticleService();
+    }
 
     public void write() {
         System.out.print("제목 ) ");
@@ -14,11 +19,9 @@ public class ArticleController {
         System.out.print("내용 ) ");
         String content = Container.getSc().nextLine();
 
-        Article article = new Article(lastId, subject, content);
-        articleList.add(article);
+        int id = articleService.create(subject, content);
 
-        System.out.printf("%d번 게시글이 등록되었습니다.\n", lastId);
-        lastId++;
+        System.out.printf("%d번 게시글이 등록되었습니다.\n", id);
     }
 
     public void list() {
@@ -31,43 +34,46 @@ public class ArticleController {
         }
     }
 
-    public void delete(String command) {
-        String[] commandList = command.split("\\?", 2);
-        String[] paramsStr = commandList[1].split("=", 2);
+    public void delete(Recuest recuest) {
+        int id = _getIntParam(recuest.getParams("id"));
+        Article article = _getFindById(id);
 
-        String value = paramsStr[1];
-        int idx = Integer.parseInt(value);
-
-        Article article = _getFindById(idx);
+        if (id == -1) {
+            System.out.printf("잘못된 입력입니다.");
+            return;
+        }
 
         if (article == null) {
-            System.out.printf("%d번 게시물이 존재하지 않습니다.\n", idx);
+            System.out.printf("%d번 게시물이 존재하지 않습니다.\n", id);
         } else {
             articleList.remove(article);
-            System.out.printf("%d번 게시물이 삭제되었습니다.\n", idx);
+            System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
         }
     }
 
-    public void change(String command) {
-        String[] commandList = command.split("\\?", 2);
-        String[] paramsStr = commandList[1].split("=", 2);
+    public void change(Recuest recuest) {
+        int id = _getIntParam(recuest.getParams("id"));
+        Article article = _getFindById(id);
 
-        String value = paramsStr[1];
-        int idx = Integer.parseInt(value);
-
-        Article article = _getFindById(idx);
+        if (id == -1) {
+            System.out.printf("잘못된 입력입니다.");
+            return;
+        }
 
         if (article == null) {
-            System.out.printf("%d번 게시물은 존재하지 않습니다.\n", idx);
+            System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
         } else {
             System.out.printf("제목(기존) : %s\n", article.getSubject());
+            System.out.printf("제목 : ");
             String modifySubject = Container.getSc().nextLine();
             article.setSubject(modifySubject);
+
             System.out.printf("내용(기존) : %s\n", article.getContent());
+            System.out.printf("내용 : ");
             String modifyContent = Container.getSc().nextLine();
             article.setContent(modifyContent);
 
-            System.out.printf("%d번 게시물이 수정되었습니다.\n", idx);
+            System.out.printf("%d번 게시물이 수정되었습니다.\n", id);
         }
     }
 
@@ -78,5 +84,15 @@ public class ArticleController {
             }
         }
         return null;
+    }
+
+    private int _getIntParam (String id) {
+        int defultValue = -1;
+
+        try {
+            return Integer.parseInt(id);
+        } catch (NumberFormatException e) {
+            return defultValue;
+        }
     }
 }
