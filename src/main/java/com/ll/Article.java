@@ -14,10 +14,20 @@ public class Article {
     public int getId() {
         return this.id;
     }
+
     public String getSubject() {
         return this.subject;
     }
+
     public String getContent() {
         return this.content;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
