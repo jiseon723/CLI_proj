@@ -3,7 +3,6 @@ package com.ll.article;
 import com.ll.Container;
 import com.ll.Recuest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleController {
@@ -38,17 +37,18 @@ public class ArticleController {
 
     public void delete(Recuest recuest) {
         int id = _getIntParam(recuest.getParams("id"));
-        Article article = _getFindById(id);
 
         if (id == -1) {
             System.out.printf("잘못된 입력입니다.");
             return;
         }
 
+        Article article = articleService.getFindId(id);
+
         if (article == null) {
             System.out.printf("%d번 게시물이 존재하지 않습니다.\n", id);
         } else {
-            articleList.remove(article);
+            articleService.remove(article);
             System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
         }
     }
@@ -77,15 +77,6 @@ public class ArticleController {
 
             System.out.printf("%d번 게시물이 수정되었습니다.\n", id);
         }
-    }
-
-    private Article _getFindById(int id) {
-        for (Article item : articleList) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
     }
 
     private int _getIntParam (String id) {

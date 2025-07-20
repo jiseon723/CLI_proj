@@ -27,7 +27,7 @@ public class Recuest {
         return actionCode;
     }
 
-    public int String getParams(String key) {
+    public String getParams(String key) {
         return params.get(key);
     }
 }
