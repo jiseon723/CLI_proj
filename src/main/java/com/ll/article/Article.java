@@ -1,4 +1,4 @@
-package com.ll;
+package com.ll.article;
 
 public class Article {
     int id;
