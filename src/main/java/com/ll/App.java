@@ -6,13 +6,14 @@ import java.util.Scanner;
 
 public class App {
     Scanner sc;
+    List<Article> articleList = new ArrayList<>();
+
     App (Scanner sc) {
         this.sc = sc;
     }
 
     void run() {
         int lastId = 1;
-        List<Article> articleList = new ArrayList<>();
 
         System.out.println("== 게시판 앱 ==");
 
@@ -48,13 +49,14 @@ public class App {
                 String value = paramsStr[1];
                 int idx = Integer.parseInt(value);
 
-                for (int i = 0; i < articleList.size(); i++) {
-                    if (articleList.get(i).getId() == idx) {
-                        articleList.remove(i);
-                    }
-                }
+                Article article = _getFindById(idx);
 
-                System.out.printf("%d번 게시물이 삭제되었습니다.\n", idx);
+                if (article == null) {
+                    System.out.printf("%d번 게시물이 존재하지 않습니다.\n", idx);
+                } else {
+                    articleList.remove(article);
+                    System.out.printf("%d번 게시물이 삭제되었습니다.\n", idx);
+                }
             } else if (command.startsWith("수정")) {
                 String[] commandList = command.split("\\?", 2);
                 String[] paramsStr = commandList[1].split("=", 2);
@@ -62,13 +64,8 @@ public class App {
                 String value = paramsStr[1];
                 int idx = Integer.parseInt(value);
 
-                Article article = null;
+                Article article = _getFindById(idx);
 
-                for (Article item : articleList) {
-                    if (item.getId() == idx) {
-                        article = item;
-                    }
-                }
                 if (article == null) {
                     System.out.printf("%d번 게시물은 존재하지 않습니다.\n", idx);
                 } else {
@@ -83,5 +80,14 @@ public class App {
                 }
             }
         }
+    }
+
+    private Article _getFindById(int id) {
+        for (Article item : articleList) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+        return null;
     }
 }
