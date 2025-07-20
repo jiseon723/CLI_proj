@@ -3,26 +3,21 @@ package com.ll;
 import com.ll.article.ArticleController;
 import com.ll.system.SystemController;
 
-import java.util.Scanner;
-
 public class App {
-    Scanner sc;
     ArticleController articleController;
     SystemController systemController;
 
-    App (Scanner sc) {
-        this.sc = sc;
-        articleController = new ArticleController(sc);
+    public App () {
+        articleController = new ArticleController();
         systemController = new SystemController();
     }
 
-    void run() {
-
+    void run () {
         System.out.println("== 게시판 앱 ==");
 
         while (true) {
             System.out.print("명령 ) ");
-            String command = sc.nextLine().trim();
+            String command = Container.getSc().nextLine().trim();
 
             if (command.equals("종료")) {
                 systemController.exit();
