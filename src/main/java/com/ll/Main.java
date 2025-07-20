@@ -35,7 +35,7 @@ public class Main {
 
                 for(int i = 0; i < articleList.size(); i++) {
                         Article article = articleList.get(i);
-                        System.out.printf(" %d / %s / %s ", article.getId(), article.getSubject(), article.getContent());
+                        System.out.printf(" %d / %s / %s \n", article.getId(), article.getSubject(), article.getContent());
                 }
             } else if (command.startsWith("삭제")){
                 String[] commandList = command.split("\\?", 2);
