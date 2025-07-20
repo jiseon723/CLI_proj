@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Recuest {
-    private String actionCode;
-    private Map<String, String> params = new HashMap<>();
+    private final String actionCode;
+    private final Map<String, String> params = new HashMap<>();
 
     public Recuest (String command) {
         String[] commandList = command.split("\\?", 2);
@@ -15,7 +15,7 @@ public class Recuest {
 
         String[] paramsList = commandList[1].split("&");
 
-        for (String paramsRow = paramsList) {
+        for (String paramsRow : paramsList) {
             String[] paramsStr = paramsRow.split("=", 2);
             String key = paramsStr[0];
             String value = paramsStr[1];

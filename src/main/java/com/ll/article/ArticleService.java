@@ -20,7 +20,7 @@ public class ArticleService {
         return articleList;
     }
 
-    public Article getFindId(int id) {
+    public Article getFindById(int id) {
         for (Article item : articleList) {
             if (item.getId() == id) {
                 return item;
@@ -31,5 +31,10 @@ public class ArticleService {
 
     public void remove(Article article) {
         articleList.remove(article);
+    }
+
+    public void change(Article article, String modifySubject, String modifyContent) {
+        article.setSubject(modifySubject);
+        article.setContent(modifyContent);
     }
 }
