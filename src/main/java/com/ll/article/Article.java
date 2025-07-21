@@ -1,7 +1,6 @@
 package com.ll.article;
 
 import java.util.Map;
-import java.util.Objects;
 
 public class Article {
     int id;

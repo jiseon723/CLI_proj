@@ -5,7 +5,6 @@ import com.ll.Container;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ArticleRepository {
     List<Article> articleList = new ArrayList<>();
@@ -23,7 +22,7 @@ public class ArticleRepository {
     public List<Article> findAll() {
         List<Article> articleList = new ArrayList<>();
 
-        List<Map<String, Objects>> rows = Container.getDbConnection().selectRows("select * from article");
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from article");
 
         for (Map<String, Object> row : rows) {
             Article article = new Article(row);
