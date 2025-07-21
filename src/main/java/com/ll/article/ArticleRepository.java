@@ -57,16 +57,27 @@ public class ArticleRepository {
         return id;
     }
 
-    public List<Members> logIn(String inputId) {
-        List<Members> memberList = new ArrayList<>();
+    public Members logIn(String inputId) {
+        List<Members> membersList = this.findMember();
 
-        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select password from members where userid = '%s'", inputId);
+        for (Members item : membersList) {
+            if (item.getUserId() == inputId) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public List<Members> findMember() {
+        List<Members> membersList = new ArrayList<>();
+
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from article");
 
         for (Map<String, Object> row : rows) {
             Members members = new Members(row);
-            members.getPassword();
+            membersList.add(members);
         }
 
-        return memberList;
+        return membersList;
     }
 }
