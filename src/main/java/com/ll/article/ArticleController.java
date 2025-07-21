@@ -105,4 +105,15 @@ public class ArticleController {
             System.out.println("회원가입에 실패하셨습니다.");
         }
     }
+
+    public void memberLogIn() {
+        System.out.println("== 로그인 ==");
+        System.out.print("아이디 : ");
+        String inputId = Container.getSc().nextLine();
+        System.out.print("비밀번호 : ");
+        String inputPw = Container.getSc().nextLine();
+
+        articleService.logIn(inputId);
+    }
+
 }

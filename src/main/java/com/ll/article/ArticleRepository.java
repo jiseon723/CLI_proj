@@ -1,6 +1,7 @@
 package com.ll.article;
 
 import com.ll.Container;
+import com.ll.members.Members;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +51,22 @@ public class ArticleRepository {
     }
 
     public int signUp(String userId, String password) {
-        String sql = String.format("INSERT INTO members set userId = %s, password = %s, regDate = now()", userId, password);
+        String sql = String.format("INSERT INTO members set userId = '%s', password = '%s', regDate = now()", userId, password);
         int id = Container.getDbConnection().insert(sql);
 
         return id;
+    }
+
+    public List<Members> logIn(String inputId) {
+        List<Members> memberList = new ArrayList<>();
+
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select password from members where userid = '%s'", inputId);
+
+        for (Map<String, Object> row : rows) {
+            Members members = new Members(row);
+            members.getPassword();
+        }
+
+        return memberList;
     }
 }

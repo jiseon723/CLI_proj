@@ -1,5 +1,7 @@
 package com.ll.article;
 
+import com.ll.members.Members;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,5 +34,9 @@ public class ArticleService {
 
     public int signUp(String userId, String password) {
         return articleRepository.signUp(userId, password);
+    }
+
+    public List<Members> logIn(String inputId) {
+        return articleRepository.logIn(inputId);
     }
 }

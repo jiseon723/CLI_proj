@@ -47,6 +47,9 @@ public class App {
 
             } else if (recuest.getActionCode().equals("회원가입")) {
                 articleController.memberJoin();
+
+            } else if (recuest.getActionCode().equals("로그인")) {
+                articleController.memberLogIn();
             }
 
         }
