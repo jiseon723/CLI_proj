@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ArticleRepository {
-    List<Article> articleList = new ArrayList<>();
-    int lastId = 1;
 
     public int create (String subject, String content) {
         String sql = String.format("inselt into article set subject = '%s', content = '%s'", subject, content);
