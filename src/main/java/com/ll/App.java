@@ -14,8 +14,7 @@ public class App {
         DBConnection.DB_USER = "root";
         DBConnection.DB_PASSWORD = "";
 
-        DBConnection DBConnection = new DBConnection();
-        DBConnection.connect();
+        Container.getDbConnection().connect();
 
         articleController = new ArticleController();
         systemController = new SystemController();
