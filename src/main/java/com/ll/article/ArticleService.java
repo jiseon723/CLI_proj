@@ -18,8 +18,8 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-    public Article getFindById(int id) {
-        return articleRepository.getFindById(id);
+    public Article FindById(int id) {
+        return articleRepository.FindById(id);
     }
 
     public void remove(Article article) {

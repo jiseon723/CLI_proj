@@ -11,12 +11,10 @@ public class ArticleRepository {
     int lastId = 1;
 
     public int create (String subject, String content) {
-        Article article = new Article(lastId, subject, content);
-        articleList.add(article);
+        String sql = String.format("inselt into article set subject = '%s', content = '%s'", subject, content);
+        int id = Container.getDbConnection().insert(sql);
 
-        lastId++;
-
-        return article.getId();
+        return id;
     }
 
     public List<Article> findAll() {
@@ -32,7 +30,9 @@ public class ArticleRepository {
         return articleList;
     }
 
-    public Article getFindById(int id) {
+    public Article FindById(int id) {
+        List<Article> articleList = this.findAll();
+
         for (Article item : articleList) {
             if (item.getId() == id) {
                 return item;
@@ -42,11 +42,12 @@ public class ArticleRepository {
     }
 
     public void remove(Article article) {
-        articleList.remove(article);
+        String sql = String.format("DELETE FROM article where id = '%d'", article.getId());
+        Container.getDbConnection().delete(sql);
     }
 
     public void change(Article article, String modifySubject, String modifyContent) {
-        article.setSubject(modifySubject);
-        article.setContent(modifyContent);
+        String sql = String.format("UPDATE article FROM subject = '%s', content = '%s' WHERE id = '%d'", modifySubject, modifyContent, article.getId());
+        Container.getDbConnection().update(sql);
     }
 }
