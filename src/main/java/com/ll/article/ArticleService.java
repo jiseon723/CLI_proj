@@ -36,7 +36,7 @@ public class ArticleService {
         return articleRepository.signUp(userId, password);
     }
 
-    public List<Members> logIn(String inputId) {
-        return articleRepository.logIn(inputId);
+    public Members logIn(String inputId, String inputPw) {
+        return articleRepository.logIn(inputId, inputPw);
     }
 }

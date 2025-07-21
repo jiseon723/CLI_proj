@@ -113,7 +113,7 @@ public class ArticleController {
         System.out.print("비밀번호 : ");
         String inputPw = Container.getSc().nextLine();
 
-        articleService.logIn(inputId);
+        articleService.logIn(inputId, inputPw);
     }
 
 }

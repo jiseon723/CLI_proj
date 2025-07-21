@@ -57,11 +57,11 @@ public class ArticleRepository {
         return id;
     }
 
-    public Members logIn(String inputId) {
+    public Members logIn(String inputId, String inputPw) {
         List<Members> membersList = this.findMember();
 
         for (Members item : membersList) {
-            if (item.getUserId() == inputId) {
+            if (item.getUserId() == inputId && item.getPassword() == inputPw) {
                 return item;
             }
         }
@@ -71,11 +71,10 @@ public class ArticleRepository {
     public List<Members> findMember() {
         List<Members> membersList = new ArrayList<>();
 
-        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from article");
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from members");
 
         for (Map<String, Object> row : rows) {
             Members members = new Members(row);
-            membersList.add(members);
         }
 
         return membersList;
