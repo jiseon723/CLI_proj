@@ -89,4 +89,20 @@ public class ArticleController {
             return defultValue;
         }
     }
+
+    public void memberJoin() {
+        System.out.println("== 회원가입 ==");
+        System.out.print("아이디 입력 : ");
+        String userId = Container.getSc().nextLine();
+        System.out.print("비밀번호 입력 : ");
+        String password = Container.getSc().nextLine();
+
+        int id = articleService.signUp(userId, password);
+
+        if (id != 0) {
+            System.out.println("회원가입이 완료되었습니다.");
+        } else {
+            System.out.println("회원가입에 실패하셨습니다.");
+        }
+    }
 }

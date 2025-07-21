@@ -22,6 +22,7 @@ public class App {
 
     void run () {
         System.out.println("== 게시판 앱 ==");
+        System.out.println("== 명령어: 회원가입 / 로그인 / 등록 / 목록 / 삭제 / 수정 / 종료 ==");
 
         while (true) {
             System.out.print("명령 ) ");
@@ -44,6 +45,8 @@ public class App {
             } else if (recuest.getActionCode().startsWith("수정")) {
                 articleController.change(recuest);
 
+            } else if (recuest.getActionCode().equals("회원가입")) {
+                articleController.memberJoin();
             }
 
         }

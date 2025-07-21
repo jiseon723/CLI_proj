@@ -29,4 +29,8 @@ public class ArticleService {
     public void change(Article article, String modifySubject, String modifyContent) {
         articleRepository.change(article, modifySubject, modifyContent);
     }
+
+    public int signUp(String userId, String password) {
+        return articleRepository.signUp(userId, password);
+    }
 }
