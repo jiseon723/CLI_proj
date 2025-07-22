@@ -2,15 +2,14 @@ package com.ll.article;
 
 import com.ll.Container;
 import com.ll.Recuest;
+import com.ll.members.Members;
 
 import java.util.List;
 
 public class ArticleController {
     ArticleService articleService;
 
-    public ArticleController () {
-        articleService = new ArticleService();
-    }
+    public ArticleController () {articleService = new ArticleService();}
 
     public void write() {
         System.out.print("제목 ) ");
@@ -113,7 +112,13 @@ public class ArticleController {
         System.out.print("비밀번호 : ");
         String inputPw = Container.getSc().nextLine();
 
-        articleService.logIn(inputId, inputPw);
+        Members id = articleService.logIn(inputId, inputPw);
+
+        if (id != null) {
+            System.out.println("로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.");
+        } else {
+            System.out.println("로그인이 완료되었습니다.");
+        }
     }
 
 }

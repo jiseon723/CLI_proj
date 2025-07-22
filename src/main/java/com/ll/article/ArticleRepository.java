@@ -58,24 +58,20 @@ public class ArticleRepository {
     }
 
     public Members logIn(String inputId, String inputPw) {
-        List<Members> membersList = this.findMember();
+        List<Members> membersList = this.findByMember();
 
         for (Members item : membersList) {
-            if (item.getUserId() == inputId && item.getPassword() == inputPw) {
-                return item;
+            if (item.getUserId().equals(inputId) && item.getPassword().equals(inputPw)) {
+                System.out.println("로그인 되었습니다.");
+                return item; //로그인 성공
             }
         }
-        return null;
+        return null; // 실패
     }
 
-    public List<Members> findMember() {
+    public List<Members> findByMember() {
         List<Members> membersList = new ArrayList<>();
-
         List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from members");
-
-        for (Map<String, Object> row : rows) {
-            Members members = new Members(row);
-        }
 
         return membersList;
     }

@@ -8,17 +8,11 @@ public class Container {
     private static Scanner sc;
     private static DBConnection dbConnection;
 
-    public static void init () {
-        sc = new Scanner(System.in);
-    }
+    public static void init () {sc = new Scanner(System.in);}
 
-    public static void close () {
-        sc.close();
-    }
+    public static void close () {sc.close();}
 
-    public static Scanner getSc () {
-        return sc;
-    }
+    public static Scanner getSc () {return sc;}
 
     public static DBConnection getDbConnection () {
         if (dbConnection == null) {
