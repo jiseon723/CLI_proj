@@ -4,8 +4,8 @@ import java.util.Map;
 
 public class Members {
     int id;
-    String userId;
-    String password;
+    static String userId;
+    static String password;
 
     public Members (int id, String userId, String password) {
         this.id = id;
@@ -21,9 +21,9 @@ public class Members {
 
     public int getId () {return this.id;}
 
-    public String getUserId () {return this.userId;}
+    public static String getUserId() {return userId;}
 
-    public String getPassword () {return this.password;}
+    public static String getPassword() {return password;}
 
     public void setUserId (String userId) {this.userId = userId;}
 

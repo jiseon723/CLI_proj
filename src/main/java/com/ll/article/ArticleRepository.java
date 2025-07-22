@@ -60,8 +60,6 @@ public class ArticleRepository {
     public Members logIn(String inputId, String inputPw) {
         List<Members> member = this.findByMember();
 
-
-        Members members;
         if (Members.getUserId().equals(inputId) && Members.getPassword().equals(inputPw)) {
                 return (Members) member; //로그인 성공
             }
