@@ -16,6 +16,25 @@ public class ArticleRepository {
         return id;
     }
 
+
+
+    public void remove(Article article) {
+        String sql = String.format("DELETE FROM article where id = '%d'", article.getId());
+        Container.getDbConnection().delete(sql);
+    }
+
+    public void change(Article article, String modifySubject, String modifyContent) {
+        String sql = String.format("UPDATE article FROM subject = '%s', content = '%s' WHERE id = '%d'", modifySubject, modifyContent, article.getId());
+        Container.getDbConnection().update(sql);
+    }
+
+    public int signUp(String userId, String password) {
+        String sql = String.format("INSERT INTO members set userId = '%s', password = '%s', regDate = now()", userId, password);
+        int id = Container.getDbConnection().insert(sql);
+
+        return id;
+    }
+
     public List<Article> findAll() {
         List<Article> articleList = new ArrayList<>();
 
@@ -40,36 +59,27 @@ public class ArticleRepository {
         return null;
     }
 
-    public void remove(Article article) {
-        String sql = String.format("DELETE FROM article where id = '%d'", article.getId());
-        Container.getDbConnection().delete(sql);
-    }
-
-    public void change(Article article, String modifySubject, String modifyContent) {
-        String sql = String.format("UPDATE article FROM subject = '%s', content = '%s' WHERE id = '%d'", modifySubject, modifyContent, article.getId());
-        Container.getDbConnection().update(sql);
-    }
-
-    public int signUp(String userId, String password) {
-        String sql = String.format("INSERT INTO members set userId = '%s', password = '%s', regDate = now()", userId, password);
-        int id = Container.getDbConnection().insert(sql);
-
-        return id;
-    }
-
-    public Members logIn(String inputId, String inputPw) {
-        List<Members> member = this.findByMember();
-
-        if (Members.getUserId().equals(inputId) && Members.getPassword().equals(inputPw)) {
-                return (Members) member; //로그인 성공
-            }
-        return null; // 실패
-    }
-
-    public List<Members> findByMember() {
+    public List<Members> logIn() {
         List<Members> membersList = new ArrayList<>();
         List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from members");
 
-        return membersList;
+        for (Map<String, Object> row : rows) {
+            Members members = new Members(row);
+            membersList.add(members);
+        }
+
+        return null; // 실패
+    }
+
+    public Members findByMember(String inputId, String inputPw) {
+        List<Members> membersList = this.logIn();
+
+        for (Members item : membersList) {
+            if (item.getUserId().equals(inputId) && item.getPassword().equals(inputPw)) {
+                return item; //로그인 성공
+            }
+        }
+
+        return null;
     }
 }

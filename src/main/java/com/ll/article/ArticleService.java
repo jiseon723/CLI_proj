@@ -2,7 +2,6 @@ package com.ll.article;
 
 import com.ll.members.Members;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArticleService {
@@ -31,6 +30,6 @@ public class ArticleService {
     }
 
     public Members logIn(String inputId, String inputPw) {
-        return articleRepository.logIn(inputId, inputPw);
+        return articleRepository.findByMember(inputId, inputPw);
     }
 }
