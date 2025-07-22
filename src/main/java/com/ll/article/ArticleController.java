@@ -114,7 +114,7 @@ public class ArticleController {
 
         Members id = articleService.logIn(inputId, inputPw);
 
-        if (id != null) {
+        if (id.equals(null)) {
             System.out.println("로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.");
         } else {
             System.out.println("로그인이 완료되었습니다.");

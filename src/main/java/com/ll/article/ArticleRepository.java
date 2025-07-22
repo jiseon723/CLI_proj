@@ -58,14 +58,13 @@ public class ArticleRepository {
     }
 
     public Members logIn(String inputId, String inputPw) {
-        List<Members> membersList = this.findByMember();
+        List<Members> member = this.findByMember();
 
-        for (Members item : membersList) {
-            if (item.getUserId().equals(inputId) && item.getPassword().equals(inputPw)) {
-                System.out.println("로그인 되었습니다.");
-                return item; //로그인 성공
+
+        Members members;
+        if (Members.getUserId().equals(inputId) && Members.getPassword().equals(inputPw)) {
+                return (Members) member; //로그인 성공
             }
-        }
         return null; // 실패
     }
 
