@@ -65,25 +65,27 @@ public class ArticleRepository {
         return null;
     }
 
-    public List<Members> logIn(String id, String userId ,String password) throws SQLException {
+    public List<Members> logIn(String id, String userId , String password) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         boolean result = false;
 
         try {
-            conn = Container.getDbConnection(id, userId, password);
+            conn = (Connection) Container.getDbConnection();
             List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from members WHERE userId = ? AND password = ?");
-            pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(id);
             pstmt.setString(1, userId);
             pstmt.setString(2, password);
             rs = pstmt.executeQuery();
-            result = rs.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+        return ;
     }
 
-    public Members findByMember(String inputId, String inputPw) {
-        List<Members> membersList = this.logIn();
+    public Members findByMember(String id, String inputId, String inputPw) throws SQLException {
+        List<Members> membersList = this.logIn(id, getUserId(), getPassword());
 
         for (Members item : membersList) {
             if (item.getUserId().equals(inputId) && item.getPassword().equals(inputPw)) {

@@ -2,7 +2,6 @@ package com.ll.article;
 
 import com.ll.Container;
 import com.ll.Recuest;
-import com.ll.members.Members;
 
 import java.util.List;
 
@@ -112,7 +111,9 @@ public class ArticleController {
         System.out.print("비밀번호 : ");
         String inputPw = Container.getSc().nextLine();
 
-        if (ArticleRepository.logIn(inputId, inputPw)) {
+        int id = articleService;
+
+        if (id != 0) {
             System.out.println("로그인이 완료되었습니다.");
         } else {
             System.out.println("로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.");
