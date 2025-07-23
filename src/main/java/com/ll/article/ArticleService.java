@@ -7,7 +7,7 @@ import java.util.List;
 public class ArticleService {
     ArticleRepository articleRepository;
 
-    ArticleService () {articleRepository = new ArticleRepository();}
+    public ArticleService () {articleRepository = new ArticleRepository();}
 
     public int create(String subject, String content) {
         return articleRepository.create(subject, content);
@@ -17,7 +17,7 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-    public Article FindById(int id) {return articleRepository.FindById(id);}
+    public Article findById(int id) {return articleRepository.findById(id);}
 
     public void remove(Article article) {articleRepository.remove(article);}
 

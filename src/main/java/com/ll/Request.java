@@ -3,11 +3,11 @@ package com.ll;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Recuest {
+public class Request {
     private final String actionCode;
     private final Map<String, String> params = new HashMap<>();
 
-    public Recuest (String command) {
+    public Request (String command) {
         String[] commandList = command.split("\\?", 2);
         actionCode = commandList[0];
 

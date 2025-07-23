@@ -1,7 +1,8 @@
 package com.ll.article;
 
 import com.ll.Container;
-import com.ll.Recuest;
+import com.ll.Request;
+import com.ll.members.Members;
 
 import java.util.List;
 
@@ -33,15 +34,15 @@ public class ArticleController {
         }
     }
 
-    public void delete(Recuest recuest) {
-        int id = _getIntParam(recuest.getParams("id"));
+    public void delete(Request request) {
+        int id = _getIntParam(request.getParams("id"));
 
         if (id == -1) {
             System.out.printf("잘못된 입력입니다.");
             return;
         }
 
-        Article article = articleService.FindById(id);
+        Article article = articleService.findById(id);
 
         if (article == null) {
             System.out.printf("%d번 게시물이 존재하지 않습니다.\n", id);
@@ -51,15 +52,15 @@ public class ArticleController {
         }
     }
 
-    public void change(Recuest recuest) {
-        int id = _getIntParam(recuest.getParams("id"));
+    public void change(Request request) {
+        int id = _getIntParam(request.getParams("id"));
 
         if (id == -1) {
             System.out.printf("잘못된 입력입니다.\n");
             return;
         }
 
-        Article article = articleService.FindById(id);
+        Article article = articleService.findById(id);
 
         if (article == null) {
             System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
@@ -111,12 +112,12 @@ public class ArticleController {
         System.out.print("비밀번호 : ");
         String inputPw = Container.getSc().nextLine();
 
-        int id = articleService;
+        Members member  = articleService.logIn(inputId, inputPw);
 
-        if (id != 0) {
-            System.out.println("로그인이 완료되었습니다.");
-        } else {
+        if (null == member) {
             System.out.println("로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.");
+        } else {
+            System.out.println("로그인이 완료되었습니다.");
         }
     }
 

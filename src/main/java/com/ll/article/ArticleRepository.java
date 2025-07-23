@@ -3,6 +3,7 @@ package com.ll.article;
 import com.ll.Container;
 import com.ll.members.Members;
 
+import java.lang.reflect.Member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import static com.ll.members.Members.*;
 public class ArticleRepository {
 
     public int create (String subject, String content) {
-        String sql = String.format("inselt into article set subject = '%s', content = '%s', regDate = now()", subject, content);
+        String sql = String.format("INSERT into article set subject = '%s', content = '%s', regDate = now()", subject, content);
         int id = Container.getDbConnection().insert(sql);
 
         return id;
@@ -30,7 +31,7 @@ public class ArticleRepository {
     }
 
     public void change(Article article, String modifySubject, String modifyContent) {
-        String sql = String.format("UPDATE article FROM subject = '%s', content = '%s' WHERE id = '%d'", modifySubject, modifyContent, article.getId());
+        String sql = String.format("UPDATE article SET subject = '%s', content = '%s' WHERE id = '%d'", modifySubject, modifyContent, article.getId());
         Container.getDbConnection().update(sql);
     }
 
@@ -44,7 +45,7 @@ public class ArticleRepository {
     public List<Article> findAll() {
         List<Article> articleList = new ArrayList<>();
 
-        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from article");
+        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("SELECT * FROM article");
 
         for (Map<String, Object> row : rows) {
             Article article = new Article(row);
@@ -54,7 +55,7 @@ public class ArticleRepository {
         return articleList;
     }
 
-    public Article FindById(int id) {
+    public Article findById(int id) {
         List<Article> articleList = this.findAll();
 
         for (Article item : articleList) {
@@ -65,34 +66,12 @@ public class ArticleRepository {
         return null;
     }
 
-    public List<Members> logIn(String id, String userId , String password) {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        boolean result = false;
-
-        try {
-            conn = (Connection) Container.getDbConnection();
-            List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from members WHERE userId = ? AND password = ?");
-            pstmt = conn.prepareStatement(id);
-            pstmt.setString(1, userId);
-            pstmt.setString(2, password);
-            rs = pstmt.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public Members findByMember(String inputId, String inputPw) {
+        String sql = "SELECT * FROM members WHERE userId = ? AND password = ?";
+        Map<String, Object> row = Container.getDbConnection().selectRow(sql);
+        if (row.isEmpty()) {
+            return null;
         }
-        return ;
-    }
-
-    public Members findByMember(String id, String inputId, String inputPw) throws SQLException {
-        List<Members> membersList = this.logIn(id, getUserId(), getPassword());
-
-        for (Members item : membersList) {
-            if (item.getUserId().equals(inputId) && item.getPassword().equals(inputPw)) {
-                return item; //로그인 성공
-            }
-        }
-
-        return null;
+        return new Members(row);
     }
 }

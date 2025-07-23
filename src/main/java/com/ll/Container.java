@@ -16,7 +16,6 @@ public class Container {
     public static Scanner getSc () {return sc;}
 
     public static DBConnection getDbConnection () {
-        PreparedStatement pstmt = null;
         if (dbConnection == null) {
             dbConnection = new DBConnection();
         }
