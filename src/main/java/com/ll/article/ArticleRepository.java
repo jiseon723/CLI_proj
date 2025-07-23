@@ -3,7 +3,9 @@ package com.ll.article;
 import com.ll.Container;
 import com.ll.members.Members;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
