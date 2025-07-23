@@ -3,9 +3,13 @@ package com.ll.article;
 import com.ll.Container;
 import com.ll.members.Members;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.ll.members.Members.*;
 
 public class ArticleRepository {
 
@@ -59,16 +63,21 @@ public class ArticleRepository {
         return null;
     }
 
-    public List<Members> logIn() {
-        List<Members> membersList = new ArrayList<>();
-        List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from members");
+    public List<Members> logIn(String id, String userId ,String password) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        boolean result = false;
 
-        for (Map<String, Object> row : rows) {
-            Members members = new Members(row);
-            membersList.add(members);
+        try {
+            conn = Container.getDbConnection(id, userId, password);
+            List<Map<String, Object>> rows = Container.getDbConnection().selectRows("select * from members WHERE userId = ? AND password = ?");
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, password);
+            rs = pstmt.executeQuery();
+            result = rs.next();
         }
-
-        return null; // 실패
     }
 
     public Members findByMember(String inputId, String inputPw) {

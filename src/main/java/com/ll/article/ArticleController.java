@@ -112,12 +112,10 @@ public class ArticleController {
         System.out.print("비밀번호 : ");
         String inputPw = Container.getSc().nextLine();
 
-        Members id = articleService.logIn(inputId, inputPw);
-
-        if (id.equals(null)) {
-            System.out.println("로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.");
-        } else {
+        if (ArticleRepository.logIn(inputId, inputPw)) {
             System.out.println("로그인이 완료되었습니다.");
+        } else {
+            System.out.println("로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.");
         }
     }
 

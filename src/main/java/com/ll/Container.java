@@ -2,6 +2,7 @@ package com.ll;
 
 import com.ll.db.DBConnection;
 
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
 public class Container {
@@ -15,6 +16,7 @@ public class Container {
     public static Scanner getSc () {return sc;}
 
     public static DBConnection getDbConnection () {
+        PreparedStatement pstmt = null;
         if (dbConnection == null) {
             dbConnection = new DBConnection();
         }
