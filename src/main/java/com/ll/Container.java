@@ -21,4 +21,9 @@ public class Container {
         }
         return dbConnection;
     }
+
+    public static void setDbConnection(DBConnection dbConn) {
+        dbConnection = dbConn;
+    }
+    public static String loginedUserId = null;
 }

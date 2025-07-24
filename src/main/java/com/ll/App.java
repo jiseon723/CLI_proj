@@ -49,7 +49,10 @@ public class App {
                 articleController.memberJoin();
 
             } else if (request.getActionCode().equals("로그인")) {
-                articleController.memberLogIn();
+                articleController.login();
+
+            } else if (request.getActionCode().equals("로그아웃")) {
+                articleController.logout();
             }
 
         }

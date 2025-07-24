@@ -92,33 +92,48 @@ public class ArticleController {
     public void memberJoin() {
         System.out.println("== 회원가입 ==");
         System.out.print("아이디 입력 : ");
-        String userId = Container.getSc().nextLine();
-        System.out.print("비밀번호 입력 : ");
-        String password = Container.getSc().nextLine();
+        String userId = Container.getSc().nextLine().trim();
 
-        int id = articleService.signUp(userId, password);
-
-        if (id != 0) {
-            System.out.println("회원가입이 완료되었습니다.");
-        } else {
-            System.out.println("회원가입에 실패하셨습니다.");
+        if (articleService.isUserIdExists(userId)) {
+            System.out.println("이미 존재하는 아이디입니다. 다른 아이디를 입력해주세요.");
+            return;
         }
+
+        System.out.print("비밀번호 입력 : ");
+        String password = Container.getSc().nextLine().trim();
+
+        articleService.memberJoin(userId, password);
+
+        System.out.println("회원가입이 완료되었습니다.");
     }
 
-    public void memberLogIn() {
+    public void login() {
+        if (Container.loginedUserId != null) {
+            System.out.println("⚠ 이미 로그인되어 있습니다. 먼저 로그아웃 해주세요.");
+            return;
+        }
+
         System.out.println("== 로그인 ==");
         System.out.print("아이디 : ");
-        String inputId = Container.getSc().nextLine();
+        String inputId = Container.getSc().nextLine().trim();
         System.out.print("비밀번호 : ");
-        String inputPw = Container.getSc().nextLine();
+        String inputPw = Container.getSc().nextLine().trim();
 
-        Members member  = articleService.logIn(inputId, inputPw);
-
-        if (null == member) {
-            System.out.println("로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.");
-        } else {
+        if (articleService.login(userId, password)) {
+            Container.loginedUserId = userId;
             System.out.println("로그인이 완료되었습니다.");
+        } else {
+            System.out.println("로그인이 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.");
         }
     }
 
+    public void logout() {
+        if (Container.loginedUserId == null) {
+            System.out.println("⚠ 로그인 상태가 아닙니다.");
+            return;
+        }
+
+        System.out.println("👋 " + Container.loginedUserId + "님, 로그아웃 되었습니다.");
+        Container.loginedUserId = null;
+    }
 }

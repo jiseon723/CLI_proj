@@ -3,11 +3,6 @@ package com.ll.article;
 import com.ll.Container;
 import com.ll.members.Members;
 
-import java.lang.reflect.Member;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,25 +13,6 @@ public class ArticleRepository {
 
     public int create (String subject, String content) {
         String sql = String.format("INSERT into article set subject = '%s', content = '%s', regDate = now()", subject, content);
-        int id = Container.getDbConnection().insert(sql);
-
-        return id;
-    }
-
-
-
-    public void remove(Article article) {
-        String sql = String.format("DELETE FROM article where id = '%d'", article.getId());
-        Container.getDbConnection().delete(sql);
-    }
-
-    public void change(Article article, String modifySubject, String modifyContent) {
-        String sql = String.format("UPDATE article SET subject = '%s', content = '%s' WHERE id = '%d'", modifySubject, modifyContent, article.getId());
-        Container.getDbConnection().update(sql);
-    }
-
-    public int signUp(String userId, String password) {
-        String sql = String.format("INSERT INTO members set userId = '%s', password = '%s', regDate = now()", userId, password);
         int id = Container.getDbConnection().insert(sql);
 
         return id;
@@ -66,6 +42,23 @@ public class ArticleRepository {
         return null;
     }
 
+    public void remove(Article article) {
+        String sql = String.format("DELETE FROM article where id = '%d'", article.getId());
+        Container.getDbConnection().delete(sql);
+    }
+
+    public void change(Article article, String modifySubject, String modifyContent) {
+        String sql = String.format("UPDATE article SET subject = '%s', content = '%s' WHERE id = '%d'", modifySubject, modifyContent, article.getId());
+        Container.getDbConnection().update(sql);
+    }
+
+    public int signUp(String userId, String password) {
+        String sql = String.format("INSERT INTO members set userId = '%s', password = '%s', regDate = now()", userId, password);
+        int id = Container.getDbConnection().insert(sql);
+
+        return id;
+    }
+
     public Members findByMember(String inputId, String inputPw) {
         String sql = "SELECT * FROM members WHERE userId = ? AND password = ?";
         Map<String, Object> row = Container.getDbConnection().selectRow(sql);
@@ -73,5 +66,15 @@ public class ArticleRepository {
             return null;
         }
         return new Members(row);
+    }
+
+    public boolean isUserIdExists(String userId) {
+        String sql = "SELECT COUNT(*) FROM members WHERE userId = ?";
+        return Container.getDbConnection().selectRowIntValue(sql, userId) > 0;
+    }
+
+    public boolean isValidLogin(String userId, String password) {
+        String sql = "SELECT COUNT(*) FROM members WHERE userId = ? AND password = ?";
+        return Container.getDbConnection().selectRowIntValue(sql, userId, password) > 0;
     }
 }

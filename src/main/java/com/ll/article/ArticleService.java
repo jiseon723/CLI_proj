@@ -32,4 +32,12 @@ public class ArticleService {
     public Members logIn(String inputId, String inputPw) {
         return articleRepository.findByMember(inputId, inputPw);
     }
+
+    public boolean isUserIdExists(String userId) {
+        return articleRepository.isUserIdExists(userId);
+    }
+
+    public boolean login(String userId, String password) {
+        return articleRepository.isValidLogin(userId, password);
+    }
 }
